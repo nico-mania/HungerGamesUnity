@@ -3,32 +3,57 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameManager Instance { get; private set; }
 
-    public Behavior cubeBehavior;
-    public GameObject gameOverUI;
+    [Header("References")]
+    [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private Behavior cubeBehavior;
 
-    void Awake()
+    private bool isGameOver = false;
+
+    private void Awake()
     {
-        Instance = this;
-    }
-
-    void Update()
-    {
-        if (cubeBehavior.hunger <= 0f)
+        if (Instance != null && Instance != this)
         {
-            ShowGameOver();
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
         }
     }
 
-    void ShowGameOver()
+    private void Update()
     {
-        gameOverUI.SetActive(true);
-        Time.timeScale = 0f; // Pausiere das Spiel
+        if (!isGameOver && cubeBehavior.Hunger <= 0f)
+        {
+            TriggerGameOver();
+        }
     }
 
     public bool CanSpawnFood()
     {
-        return cubeBehavior.hunger < 100f;
+        return cubeBehavior.Hunger < 100f;
+    }
+
+    public void TriggerGameOver()
+    {
+        if (isGameOver) return;
+
+        isGameOver = true;
+
+        if (gameOverUI != null)
+        {
+            gameOverUI.SetActive(true);
+        }
+
+        Time.timeScale = 0f;
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(
+            UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
     }
 }

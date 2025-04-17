@@ -5,28 +5,27 @@ using UnityEngine.UI;
 public class Behavior : MonoBehaviour
 {
     [Header("Hunger")]
-    public float hunger = 100f;
-    public float hungerDecayRate = 5f;
-    public float hungerGain = 25f;
-    public float sprintHungerMultiplier = 2f;
-    public Slider hungerBar;
+    [SerializeField] private float hunger = 100f;
+    [SerializeField] private float hungerDecayRate = 5f;
+    [SerializeField] private float hungerGain = 25f;
+    [SerializeField] private float sprintHungerMultiplier = 2f;
+    [SerializeField] private Slider hungerBar;
+    public float Hunger => hunger;
 
     [Header("Erkennung")]
-    public float detectionRange = 20f;
-    public float fov = 60f;
+    [SerializeField] private float detectionRange = 20f;
+    [SerializeField] private float fov = 60f;
 
     [Header("Bewegung")]
-    public float normalSpeed = 3f;
-    public float sprintSpeed = 6f;
-    public float directionChangeInterval = 2f;
-    public float sprintRange = 5f;
-    public Transform planeTransform;
+    [SerializeField] private float normalSpeed = 3f;
+    [SerializeField] private float sprintSpeed = 6f;
+    [SerializeField] private float directionChangeInterval = 2f;
+    [SerializeField] private Transform planeTransform;
 
     [Header("Umschauen")]
-    public float scanInterval = 6f;
-    public float rotationDuration = 0.5f;
+    [SerializeField] private float scanInterval = 6f;
+    [SerializeField] private float rotationDuration = 0.5f;
 
-    // Private
     private float currentSpeed;
     private Vector3 moveDirection;
     private Rigidbody rb;
@@ -36,7 +35,6 @@ public class Behavior : MonoBehaviour
     private float timeSinceLastScan = 0f;
     private bool isScanning = false;
 
-    // Plane-Bounds
     private Vector3 planeCenter;
     private float halfWidth;
     private float halfLength;
